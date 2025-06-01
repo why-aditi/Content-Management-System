@@ -9,8 +9,9 @@ A RESTful backend service for managing articles with user authentication and vie
 - Recently viewed articles tracking
 - Pagination support
 - Database schema management with Alembic
+- Docker support for easy deployment
 
-## Setup
+## Local Setup
 
 1. Create and activate a virtual environment:
 
@@ -40,6 +41,33 @@ alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
+## Docker Setup
+
+1. Set up environment variables (optional):
+   Create a `.env` file with the following variables:
+
+   ```env
+   SECRET_KEY=your-secure-secret-key
+   POSTGRES_PASSWORD=your-secure-db-password
+   ```
+
+2. Build and run with Docker Compose:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+3. Access the application:
+   - API: http://localhost:8000
+   - API Documentation: http://localhost:8000/docs
+
+## Environment Variables
+
+- `SECRET_KEY`: JWT secret key (default: your-secret-key-here)
+- `ALGORITHM`: JWT algorithm (default: HS256)
+- `ACCESS_TOKEN_EXPIRE_MINUTES`: Token expiration time (default: 30)
+- `POSTGRES_PASSWORD`: Database password (default: postgres)
+
 ## API Endpoints
 
 ### Authentication
@@ -49,28 +77,9 @@ uvicorn app.main:app --reload
 
 ### Articles
 
+- `GET /articles/`: List all articles
 - `POST /articles/`: Create a new article
-- `GET /articles/`: List user's articles (with pagination)
-- `GET /articles/{article_id}`: Get article details
-- `PUT /articles/{article_id}`: Update article
-- `DELETE /articles/{article_id}`: Delete article
-
-### User
-
-- `GET /users/me/`: Get current user information
-
-## Authentication
-
-All article-related endpoints require authentication. Include the JWT token in the Authorization header:
-
-```
-Authorization: Bearer <your_token>
-```
-
-## Pagination
-
-The articles list endpoint supports pagination with `skip` and `limit` query parameters:
-
-```
-GET /articles/?skip=0&limit=10
-```
+- `GET /articles/{id}`: Get article details
+- `PUT /articles/{id}`: Update an article
+- `DELETE /articles/{id}`: Delete an article
+- `GET /articles/recent/`: Get recently viewed articles
