@@ -66,7 +66,7 @@ uvicorn app.main:app --reload
 - `SECRET_KEY`: JWT secret key (default: your-secret-key-here)
 - `ALGORITHM`: JWT algorithm (default: HS256)
 - `ACCESS_TOKEN_EXPIRE_MINUTES`: Token expiration time (default: 30)
-- `POSTGRES_PASSWORD`: Database password (default: postgres)
+- `SQLALCHEMY_DATABASE_URL`: postgresql://postgres:postgres@db:5432/cms
 
 ## API Endpoints
 
